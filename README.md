@@ -7,15 +7,15 @@ Instructions:
 
 2- open keys.txt, and fill in your customer key/secret and access token/secret between the single quotes.
 
-  To get customer key/secret and access token/secret:
+  	To get customer key/secret and access token/secret:
   
-  1- go to https://app.twitter.com
+  	1- go to https://app.twitter.com
   
-  2- create a new app.
+  	2- create a new app.
   
-  3- in the app, you will get your customer key and secret.
+  	3- in the app, you will get your customer key and secret.
   
-  4- from the app, create access token.
+  	4- from the app, create access token.
   
   
   
