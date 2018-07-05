@@ -42,6 +42,9 @@ Keys = dict()
 Keys = literal_eval(Keysr)
 Keysf.close()
 
+mentions = dict()
+mentions = {'Empty': 2}
+
 tim = time.time()
 while True:
     if time.time() > tim + (RefreshTime*60):
@@ -78,10 +81,10 @@ while True:
                     if tweet['user']['screen_name'].lower() in tweeters.keys():
                         if tweeters[tweet['user']['screen_name'].lower()] == 0:
                             tweeters[tweet['user']['screen_name'].lower()] = 1
-                            print(tweet['user']['screen_name'])
+                            print("CTT: @{}".format(tweet['user']['screen_name']))
                     else:
                         tweeters[tweet['user']['screen_name'].lower()] = 1
-                        print(tweet['user']['screen_name'])
+                        print("CTT: @{}".format(tweet['user']['screen_name']))
 
             pendingf = open("{}\Pending.txt".format(path),"w+") # add Services/Scripts/CTT to file
             pendingf.write(str(tweeters))
@@ -93,6 +96,46 @@ while True:
         except TwitterSearchException as e: # take care of all those ugly errors if there are some
             print(e)
             #Parent.SendTwitchMessage("e")
+
+####### UNCOMMENT ALL BELOW (Select, press ALT+4) TO ENABLE GETTING NOTIFICATION BASED ON MENTIONS (OR OTHER TWEETS). ######
+####### CHANGE MENTION BLOW TO KEYWORDS TO BE SEARCHED FOR #######
+            
+##        try:
+##            tso = TwitterSearchOrder() # create a TwitterSearchOrder object
+##            tso.set_keywords(['MENTION']) # Change MENTION to the tweets you want to be notified on.
+##            tso.set_language('en') # we want to see English tweets only
+##            tso.set_include_entities(False) # and don't give us all those entity information
+##            # it's about time to create a TwitterSearch object with our secret tokens
+##            ts = TwitterSearch(
+##                consumer_key = Keys['consumer_key'],
+##                consumer_secret = Keys['consumer_secret'],
+##                access_token = Keys['access_token'],
+##                access_token_secret = Keys['access_token_secret']
+##             )
+##            
+##
+##            day = time.strftime("%a %b %d",time.localtime())
+##            year = time.strftime("%Y",time.localtime())
+##
+##            
+##            
+##            
+##             # this is where the fun actually starts :)
+##            for tweet in ts.search_tweets_iterable(tso):
+##                
+##                if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
+##                    if tweet['user']['screen_name'].lower() in mentions.keys():
+##                        if mentions[tweet['user']['screen_name'].lower()] == 0:
+##                            mentions[tweet['user']['screen_name'].lower()] = 1
+##                            print("@{} tweeted: {}".format(tweet['user']['screen_name'],tweet['text']))
+##                    else:
+##                        mentions[tweet['user']['screen_name'].lower()] = 1
+##                        print("@{} tweeted: {}".format(tweet['user']['screen_name'],tweet['text']))
+##
+##
+##        except TwitterSearchException as e: # take care of all those ugly errors if there are some
+##            print(e)
+##            #Parent.SendTwitchMessage("e")
 
             
 
