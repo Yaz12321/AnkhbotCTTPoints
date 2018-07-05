@@ -2,6 +2,7 @@
 Scripts for Streamlabs Chatbot to check twitter for CTT, and give points to whoever tweets the stream.
 
 Instructions:
+
 1- Make sure folder name is CTT.
 
 2- open keys.txt, and fill in your customer key/secret and access token/secret between the single quotes.
