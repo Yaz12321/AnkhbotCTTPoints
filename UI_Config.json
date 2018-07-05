@@ -32,7 +32,7 @@
     "type": "textbox",
     "value": "",
   	"label": "CTT message",
-    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\"",
+    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\" \r\n IF CHANGED: RELOAD AFTER SAVING",
   	"group": "General"
   },
     "Permission": {
@@ -61,7 +61,7 @@
     "type": "numberbox",
     "value": 10,
     "label": "Refresh CTT List time (minutes)",
-    "tooltip": "How often do you want to refresh the CTT List?",
+    "tooltip": "How often do you want to refresh the CTT List? \r\n IF CHANGED: RELOAD AFTER SAVING",
     "group": "General"
   },
     "WhoIsMsg": {
@@ -84,6 +84,20 @@
     "label": "Reset Message",
     "tooltip": "Message sent CTT List has been reset",
     "group": "Responses"
+  },
+    "MentionsOn": {
+    "type": "checkbox",
+    "value": false,
+  	"label": "Receive Twitter Mentions?",
+    "tooltip": "Receive twitter mentions. IF CHANGED: RELOAD AFTER SAVING",
+  	"group": "Mentions"
+  },
+    "Mention": {
+    "type": "textbox",
+    "value": "",
+    "label": "Mention to search for",
+    "tooltip": "Mention or key word/phrase to search for. \r\n IF CHANGED: RELOAD AFTER SAVING",
+    "group": "Mentions"
   },
 
 }

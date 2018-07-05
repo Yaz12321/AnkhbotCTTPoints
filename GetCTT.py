@@ -34,6 +34,8 @@ Settings = dict()
 Settings = json.load(Settingsf, encoding='utf-8-sig')
 CTTMsg = Settings['CTTMsg']
 RefreshTime = Settings['RefreshTime']
+MentionsOn = Settings['MentionsOn']
+Mention = Settings['Mention']
 Settingsf.close()
 
 Keysf = open("{}\keys.txt".format(path),"r+")
@@ -47,11 +49,59 @@ mentions = {'Empty': 2}
 
 tim = time.time()
 while True:
-    if time.time() > tim + (RefreshTime*60):
-        tim = time.time()
+   
+    try:
+        tso = TwitterSearchOrder() # create a TwitterSearchOrder object
+        tso.set_keywords([CTTMsg]) # let's define all words we would like to have a look for
+        tso.set_language('en') # we want to see English tweets only
+        tso.set_include_entities(False) # and don't give us all those entity information
+        # it's about time to create a TwitterSearch object with our secret tokens
+        ts = TwitterSearch(
+            consumer_key = Keys['consumer_key'],
+            consumer_secret = Keys['consumer_secret'],
+            access_token = Keys['access_token'],
+            access_token_secret = Keys['access_token_secret']
+         )
+        
+
+        day = time.strftime("%a %b %d",time.localtime())
+        year = time.strftime("%Y",time.localtime())
+        path = os.path.dirname(os.path.abspath(__file__))
+        pendingf = open('{}\Pending.txt'.format(path),'r+')
+        Tread = pendingf.read()
+        tweeters = dict()
+        tweeters = literal_eval(Tread)
+        pendingf.close()
+        
+        
+        
+         # this is where the fun actually starts :)
+        for tweet in ts.search_tweets_iterable(tso):
+            
+            if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
+                if tweet['user']['screen_name'].lower() in tweeters.keys():
+                    if tweeters[tweet['user']['screen_name'].lower()] == 0:
+                        tweeters[tweet['user']['screen_name'].lower()] = 1
+                        print("({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']))
+                else:
+                    tweeters[tweet['user']['screen_name'].lower()] = 1
+                    print("({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']))
+
+        pendingf = open("{}\Pending.txt".format(path),"w+") # add Services/Scripts/CTT to file
+        pendingf.write(str(tweeters))
+        #print(time.strftime("%a %b %d %H:%M:%S +0000 %Y",time.localtime()))
+        pendingf.close()
+
+        #print(tweet)
+
+    except TwitterSearchException as e: # take care of all those ugly errors if there are some
+        print(e)
+        #Parent.SendTwitchMessage("e")
+
+    if MentionsOn == True:
         try:
             tso = TwitterSearchOrder() # create a TwitterSearchOrder object
-            tso.set_keywords([CTTMsg]) # let's define all words we would like to have a look for
+            tso.set_keywords([Mention]) # set key word to be searched for
             tso.set_language('en') # we want to see English tweets only
             tso.set_include_entities(False) # and don't give us all those entity information
             # it's about time to create a TwitterSearch object with our secret tokens
@@ -65,12 +115,7 @@ while True:
 
             day = time.strftime("%a %b %d",time.localtime())
             year = time.strftime("%Y",time.localtime())
-            path = os.path.dirname(os.path.abspath(__file__))
-            pendingf = open('{}\Pending.txt'.format(path),'r+')
-            Tread = pendingf.read()
-            tweeters = dict()
-            tweeters = literal_eval(Tread)
-            pendingf.close()
+
             
             
             
@@ -78,65 +123,37 @@ while True:
             for tweet in ts.search_tweets_iterable(tso):
                 
                 if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
-                    if tweet['user']['screen_name'].lower() in tweeters.keys():
-                        if tweeters[tweet['user']['screen_name'].lower()] == 0:
-                            tweeters[tweet['user']['screen_name'].lower()] = 1
-                            print("CTT: @{}".format(tweet['user']['screen_name']))
+                    if tweet['id'] in mentions.keys():
+                        if mentions[tweet['id']] == 0:
+                            mentions[tweet['id']] = 1
+                            print("({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']))
                     else:
-                        tweeters[tweet['user']['screen_name'].lower()] = 1
-                        print("CTT: @{}".format(tweet['user']['screen_name']))
+                        mentions[tweet['id']] = 1
+                        print("({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']))
 
-            pendingf = open("{}\Pending.txt".format(path),"w+") # add Services/Scripts/CTT to file
-            pendingf.write(str(tweeters))
-            #print(time.strftime("%a %b %d %H:%M:%S +0000 %Y",time.localtime()))
-            pendingf.close()
-
-            #print(tweet)
 
         except TwitterSearchException as e: # take care of all those ugly errors if there are some
             print(e)
             #Parent.SendTwitchMessage("e")
 
-####### UNCOMMENT ALL BELOW (Select, press ALT+4) TO ENABLE GETTING NOTIFICATION BASED ON MENTIONS (OR OTHER TWEETS). ######
-####### CHANGE MENTION BLOW TO KEYWORDS TO BE SEARCHED FOR #######
-            
-##        try:
-##            tso = TwitterSearchOrder() # create a TwitterSearchOrder object
-##            tso.set_keywords(['MENTION']) # Change MENTION to the tweets you want to be notified on.
-##            tso.set_language('en') # we want to see English tweets only
-##            tso.set_include_entities(False) # and don't give us all those entity information
-##            # it's about time to create a TwitterSearch object with our secret tokens
-##            ts = TwitterSearch(
-##                consumer_key = Keys['consumer_key'],
-##                consumer_secret = Keys['consumer_secret'],
-##                access_token = Keys['access_token'],
-##                access_token_secret = Keys['access_token_secret']
-##             )
-##            
-##
-##            day = time.strftime("%a %b %d",time.localtime())
-##            year = time.strftime("%Y",time.localtime())
-##
-##            
-##            
-##            
-##             # this is where the fun actually starts :)
-##            for tweet in ts.search_tweets_iterable(tso):
-##                
-##                if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
-##                    if tweet['user']['screen_name'].lower() in mentions.keys():
-##                        if mentions[tweet['user']['screen_name'].lower()] == 0:
-##                            mentions[tweet['user']['screen_name'].lower()] = 1
-##                            print("@{} tweeted: {}".format(tweet['user']['screen_name'],tweet['text']))
-##                    else:
-##                        mentions[tweet['user']['screen_name'].lower()] = 1
-##                        print("@{} tweeted: {}".format(tweet['user']['screen_name'],tweet['text']))
-##
-##
-##        except TwitterSearchException as e: # take care of all those ugly errors if there are some
-##            print(e)
-##            #Parent.SendTwitchMessage("e")
 
-            
+
+    time.sleep(RefreshTime*60)
+
+
+######    tweet['text'] : text of tweet
+######    tweet['id'] : id of tweet
+######    tweet['retweet_count']: number of retweets
+######    tweet['favorite_count'] : number of likes
+######    tweet['created_at'] : date and time of creating tweet
+######    tweet['user']['name'] : Display name
+######    tweet['user']['screen_name'] : @name
+######    tweet['user']['id'] : user id
+######    tweet['user']['statuses_count'] : number of tweets by user
+######    tweet['user']['friend_count'] : number of user's friends
+######    tweet['user']['location'] : location of user
+######    tweet['user']['following'] : whether is following authenticator
+######    tweet['user']['created_at'] : date and time of creating user account
+        
 
 
