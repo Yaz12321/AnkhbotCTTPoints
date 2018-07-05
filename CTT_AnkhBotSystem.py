@@ -106,7 +106,7 @@ def ReloadSettings(jsonData):
 def Execute(data):
 
     #Reset List
-    if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo)  and data.GetParam(0).lower() == MySettings.Resetcmd:
+    if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.Resetcmd:
         fil = open("Services/Scripts/CTT/Pending.txt","w+")
         fil.write("{'Empty': 2}")
         fil.close()
@@ -118,7 +118,7 @@ def Execute(data):
        live = Parent.IsLive()
     
     #Get twitch account from streamer
-    if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.IsWhisper() and data.GetParam(0).lower() == MySettings.WhoIscmd:
+    if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.WhoIscmd :
         tweetac = data.GetParam(1)
         twitchac = data.GetParam(2)
         f = open("Services/Scripts/CTT/whois.txt","r+")
@@ -129,6 +129,7 @@ def Execute(data):
         f = open("Services/Scripts/CTT/whois.txt","w+")
         f.write(str(accounts))
         f.close()
+        Parent.SendTwitchMessage("Twitch account {} has been assigned to {}".format(twitchac,tweetac))
         AddP()
 
     return
