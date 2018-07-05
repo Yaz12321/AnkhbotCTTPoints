@@ -9,7 +9,7 @@ Instructions:
 
   	To get customer key/secret and access token/secret:
   
-  	1- go to https://app.twitter.com
+  	1- go to https://apps.twitter.com
   
   	2- create a new app.
   
