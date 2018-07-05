@@ -19,9 +19,9 @@ Instructions:
   
   
   
-3- open Command Prompt, and type "start C:\python27\scripts\pip.exe install TwitterSearch
+3- open Command Prompt, and type "start C:\python27\scripts\pip.exe install TwitterSearch" to install TwitterSearch library.
 
-4- Make sure to set your Twitter message and saving settings before running/enabling the command.
+4- On Chatbot, make sure to set your Twitter message and saving settings before running/enabling the command.
 
 5- Make sure to follow your bot account to receive whispers asking to provide twitch accounts.
 
