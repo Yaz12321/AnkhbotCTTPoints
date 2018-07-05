@@ -80,8 +80,11 @@ def Init():
     global Trigger
     Trigger = 0
     global n
-    n = 0 
-
+    n = 0
+    
+    path = os.path.dirname(os.path.abspath(__file__))
+    os.system("start {}\GetCTT.py".format(path))
+    
     global MySettings
     # Load in saved settings
     MySettings = Settings(settingsFile)
@@ -129,15 +132,18 @@ def Execute(data):
         f = open("Services/Scripts/CTT/whois.txt","w+")
         f.write(str(accounts))
         f.close()
-        Parent.SendTwitchMessage("Twitch account {} has been assigned to {}".format(twitchac,tweetac))
+        Parent.SendStreamWhisper(Parent.GetChannelName(),"Twitch account {} has been assigned to @{}".format(twitchac,tweetac))
         AddP()
+
+    if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.StartUpdatecmd :
+        path = os.path.dirname(os.path.abspath(__file__))
+        os.system("start {}\GetCTT.py".format(path))
+
 
     return
 
 def AddP():
 
-    path = os.path.dirname(os.path.abspath(__file__))
-    os.system("start {}\GetCTT.py".format(path))
     
     global t
     t = time.time()
@@ -195,6 +201,10 @@ def Tick():
     if time.time() > t + (MySettings.RefreshTime*60) and live == True:
         AddP()
     return 
+
+def Unload():
+    os.system("taskkill /IM python.exe")
+    return
 
 def UpdateSettings():
     with open(m_ConfigFile) as ConfigFile:

@@ -21,6 +21,13 @@
     "tooltip": "Command to reset who has received points. Needs to be called every time you start streaming",
   	"group": "General"
   },
+    "StartUpdatecmd": {
+    "type": "textbox",
+    "value": "!getctt",
+  	"label": "Open CTT Update command",
+    "tooltip": "The script to update CTT list opens automatically. \r\nHowever, if you closed it by mistake, and want to reopen it you can use this command.",
+  	"group": "General"
+  },
     "CTTMsg": {
     "type": "textbox",
     "value": "",
