@@ -1,0 +1,82 @@
+﻿{
+  "output_file": "settings.json",
+    "LiveOnly": {
+    "type": "checkbox",
+    "value": true,
+  	"label": "Only when live",
+    "tooltip": "Command is only active when stream is live",
+  	"group": "General"
+  },
+    "WhoIscmd": {
+    "type": "textbox",
+    "value": "!whois",
+  	"label": "Command to give twitch account",
+    "tooltip": "When the bot gets a twitter account, it needs to ask you for its corresponding twitch account.\r\nThis is the command in which you give the answer: ![command] [twitter account] [twitch account]",
+  	"group": "General"
+  },
+    "Resetcmd": {
+    "type": "textbox",
+    "value": "!resetctt",
+  	"label": "Reset Command",
+    "tooltip": "Command to reset who has received points. Needs to be called every time you start streaming",
+  	"group": "General"
+  },
+    "CTTMsg": {
+    "type": "textbox",
+    "value": "",
+  	"label": "CTT message",
+    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\"",
+  	"group": "General"
+  },
+    "Permission": {
+    "type": "dropdown",
+    "value": "Caster",
+    "items": ["Everyone","Regular","Subscriber","GameWisp Subscriber","User_Specific","Min_Rank","Min_Points","Min_Hours","Moderator","Editor","Caster"],
+    "label": "Permission level",
+    "tooltip": "Set the permission level for the command",
+    "group": "General"
+  },
+    "PermissionInfo": {
+    "type": "textbox",
+    "value": "",
+    "label": "Permission level info",
+    "tooltip": "Set the user, rank or tier for permission",
+    "group": "General"
+  },
+    "CTTPayout": {
+    "type": "numberbox",
+    "value": 30,
+    "label": "Payout for tweeting",
+    "tooltip": "How many points to give the users who tweet",
+    "group": "General"
+  },
+    "RefreshTime": {
+    "type": "numberbox",
+    "value": 10,
+    "label": "Refresh CTT List time (minutes)",
+    "tooltip": "How often do you want to refresh the CTT List?",
+    "group": "General"
+  },
+    "WhoIsMsg": {
+    "type": "textbox",
+    "value": "Who is {0} from Twitter? Respond by {1} [twitter] [twitch]",
+    "label": "Who Is message",
+    "tooltip": "Sent through twitch whispers. \r\n{0} = twitter account \r\n {1} = Respond command",
+    "group": "Responses"
+  },
+    "GetPointsMsg": {
+    "type": "textbox",
+    "value": "Thank you {0} for tweeting. You have received {1} {2}. ",
+    "label": "Chat Message on CTT",
+    "tooltip": " {0} = viewer \r\n {1} = payout \r\n {2} = currency name",
+    "group": "Responses"
+  },
+    "ResetMsg": {
+    "type": "textbox",
+    "value": "CTT List has been reset",
+    "label": "Reset Message",
+    "tooltip": "Message sent CTT List has been reset",
+    "group": "Responses"
+  },
+
+}
