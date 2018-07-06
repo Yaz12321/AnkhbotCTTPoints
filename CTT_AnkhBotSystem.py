@@ -82,9 +82,7 @@ def Init():
     global n
     n = 0
     
-    path = os.path.dirname(os.path.abspath(__file__))
-    os.system("start {}\GetCTT.py".format(path))
-    
+   
     global MySettings
     # Load in saved settings
     MySettings = Settings(settingsFile)
@@ -204,6 +202,14 @@ def Tick():
 
 def Unload():
     os.system("taskkill /IM python.exe")
+    return
+
+def ScriptToggled(status):
+    if status == True:
+        os.system("taskkill /IM python.exe")
+        path = os.path.dirname(os.path.abspath(__file__))
+        os.system("start {}\GetCTT.py".format(path))
+        
     return
 
 def UpdateSettings():
