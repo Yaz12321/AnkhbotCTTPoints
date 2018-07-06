@@ -89,8 +89,8 @@ def Bcolour(colour):
         return(Back.YELLOW)    
     
 
-print Tcolour(CTTColour) + Bcolour(CTTBG) + "CTT"
-print Tcolour(MentionColour) + Bcolour(MentionBG) + "Mention"
+print Tcolour(CTTColour) + Bcolour(CTTBG) + "CTT" + Fore.RESET + Back.RESET
+print Tcolour(MentionColour) + Bcolour(MentionBG) + "Mention" + Fore.RESET + Back.RESET
 
 Keysf = open("{}\keys.txt".format(path),"r+")
 Keysr = Keysf.read()
@@ -139,12 +139,12 @@ while True:
                 if tweet['user']['screen_name'].lower() in tweeters.keys():
                     if tweeters[tweet['user']['screen_name'].lower()] == 0:
                         tweeters[tweet['user']['screen_name'].lower()] = 1
-                        print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name'])
+                        print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']) + Fore.RESET + Back.RESET
                         if sound == True:
                             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
                 else:
                     tweeters[tweet['user']['screen_name'].lower()] = 1
-                    print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name'])
+                    print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']) + Fore.RESET + Back.RESET
                     if sound == True:
                         winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
@@ -188,13 +188,13 @@ while True:
                     if tweet['id'] in mentions.keys():
                         if mentions[tweet['id']] == 0:
                             mentions[tweet['id']] = 1
-                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text'])
+                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']) + Fore.RESET + Back.RESET
                             if sound == True:
                                 winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
                     else:
                         mentions[tweet['id']] = 1
-                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text'])
+                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']) + Fore.RESET + Back.RESET
                         if sound == True:
                             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
