@@ -89,8 +89,8 @@ def Bcolour(colour):
         return(Back.YELLOW)    
     
 
-print Tcolour(CTTColour) + Bcolour(CTTBG) + "My Text is Red"
-print Tcolour(MentionColour) + Bcolour(MentionBG) + "My Text is Red"
+print Tcolour(CTTColour) + Bcolour(CTTBG) + "CTT"
+print Tcolour(MentionColour) + Bcolour(MentionBG) + "Mention"
 
 Keysf = open("{}\keys.txt".format(path),"r+")
 Keysr = Keysf.read()
