@@ -61,7 +61,7 @@
     "type": "numberbox",
     "value": 10,
     "label": "Refresh CTT List time (minutes)",
-    "tooltip": "How often do you want to refresh the CTT List? \r\n IF CHANGED: RELOAD AFTER SAVING",
+    "tooltip": "How often do you want to refresh the CTT List? \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
     "group": "General"
   },
     "WhoIsMsg": {
@@ -89,14 +89,14 @@
     "type": "checkbox",
     "value": false,
   	"label": "Receive Twitter Mentions?",
-    "tooltip": "Receive twitter mentions. IF CHANGED: RELOAD AFTER SAVING",
+    "tooltip": "Receive twitter mentions. \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
   	"group": "Mentions"
   },
     "Mention": {
     "type": "textbox",
     "value": "",
     "label": "Mention to search for",
-    "tooltip": "Mention or key word/phrase to search for. \r\n IF CHANGED: RELOAD AFTER SAVING",
+    "tooltip": "Mention or key word/phrase to search for. \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
     "group": "Mentions"
   },
 
