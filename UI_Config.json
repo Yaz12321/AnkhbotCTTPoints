@@ -32,7 +32,7 @@
     "type": "textbox",
     "value": "",
   	"label": "CTT message",
-    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\" \r\n IF CHANGED: RELOAD AFTER SAVING",
+    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\" \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
   	"group": "General"
   },
     "Permission": {
