@@ -186,7 +186,18 @@ def AddP():
     
     return
 
+def ResetBtn():
+    fil = open("Services/Scripts/CTT/Pending.txt","w+")
+    fil.write("{'Empty': 2}")
+    fil.close()
+    Parent.SendTwitchMessage(MySettings.ResetMsg)
+    
 
+def GetCTTBtn():
+    os.system("taskkill /IM python.exe")
+    path = os.path.dirname(os.path.abspath(__file__))
+    os.system("start \"\" \"{}\GetCTT.py\"".format(path))
+    
 
 def Tick():
 

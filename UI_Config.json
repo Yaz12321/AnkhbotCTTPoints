@@ -28,11 +28,27 @@
     "tooltip": "Command to reset who has received points. Needs to be called every time you start streaming",
   	"group": "General"
   },
+    "ResetBtn": {
+    "type": "button",
+    "label": "Reset",
+    "tooltip": "Reset CTT List (instead of Reset Command)",
+    "function": "ResetBtn",
+    "wsevent": "",
+    "group": "General"
+  },
     "StartUpdatecmd": {
     "type": "textbox",
     "value": "!getctt",
   	"label": "Open CTT Update command",
     "tooltip": "The script to update CTT list opens automatically. \r\nHowever, if you closed it by mistake, and want to reopen it you can use this command. \r\n (Or disable and enable the script!)",
+  	"group": "General"
+  },
+    "GetCTTBtn": {
+  	"type": "button",
+  	"label": "Open Twitter Monitor",
+  	"tooltip": "Same as Open CTT Update command",
+  	"function": "GetCTTBtn",
+  	"wsevent": "",
   	"group": "General"
   },
     "CTTMsg": {
