@@ -25,7 +25,7 @@
     "type": "textbox",
     "value": "!getctt",
   	"label": "Open CTT Update command",
-    "tooltip": "The script to update CTT list opens automatically. \r\nHowever, if you closed it by mistake, and want to reopen it you can use this command.",
+    "tooltip": "The script to update CTT list opens automatically. \r\nHowever, if you closed it by mistake, and want to reopen it you can use this command. \r\n (Or disable and enable the script!)",
   	"group": "General"
   },
     "CTTMsg": {
