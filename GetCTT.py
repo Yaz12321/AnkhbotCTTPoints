@@ -1,11 +1,13 @@
+print("###Keep This window open. Close if you want to change settings on Streamlabs Chatbot###")
+
 #---------------------------------------
 #	Import Libraries
 #---------------------------------------
 import sys, json, os, codecs, time, winsound
 
 from TwitterSearch import *
-
 from ast import literal_eval
+
 
 
 #---------------------------------------
@@ -26,6 +28,13 @@ Description = "Part 1: Create a list of viewers who CTT"
 # > 1.0< 
     # Official Release
 
+import colorama
+from colorama import init
+init()
+from colorama import Fore, Back, Style
+
+
+
 
 
 path = os.path.dirname(os.path.abspath(__file__))
@@ -36,8 +45,52 @@ CTTMsg = Settings['CTTMsg']
 RefreshTime = Settings['RefreshTime']
 MentionsOn = Settings['MentionsOn']
 Mention = Settings['Mention']
+CTTColour = Settings['CTTColour']
+CTTBG = Settings['CTTBackground']
+MentionColour = Settings['MentionColour']
+MentionBG = Settings['MentionBG']
 sound = Settings['Sound']
 Settingsf.close()
+
+def Tcolour(colour):
+    if colour == "RED":    
+        return(Fore.RED)
+    elif colour == "BLACK":
+        return(Fore.BLACK)
+    elif colour == "BLUE":
+        return(Fore.BLUE)
+    elif colour == "CYAN":
+        return(Fore.CYAN)
+    elif colour == "GREEN":
+        return(Fore.GREEN)
+    elif colour == "MAGENTA":
+        return(Fore.MAGENTA)
+    elif colour == "WHITE":
+        return(Fore.WHITE)
+    elif colour == "YELLOW":
+        return(Fore.YELLOW)
+    
+def Bcolour(colour):
+    if colour == "RED":    
+        return(Back.RED)
+    elif colour == "BLACK":
+        return(Back.BLACK)
+    elif colour == "BLUE":
+        return(Back.BLUE)
+    elif colour == "CYAN":
+        return(Back.CYAN)
+    elif colour == "GREEN":
+        return(Back.GREEN)
+    elif colour == "MAGENTA":
+        return(Back.MAGENTA)
+    elif colour == "WHITE":
+        return(Back.WHITE)
+    elif colour == "YELLOW":
+        return(Back.YELLOW)    
+    
+
+print Tcolour(CTTColour) + Bcolour(CTTBG) + "My Text is Red"
+print Tcolour(MentionColour) + Bcolour(MentionBG) + "My Text is Red"
 
 Keysf = open("{}\keys.txt".format(path),"r+")
 Keysr = Keysf.read()
@@ -49,8 +102,9 @@ mentions = dict()
 mentions = {'Empty': 2}
 
 tim = time.time()
+
 while True:
-   
+
     
    
     try:
@@ -85,12 +139,12 @@ while True:
                 if tweet['user']['screen_name'].lower() in tweeters.keys():
                     if tweeters[tweet['user']['screen_name'].lower()] == 0:
                         tweeters[tweet['user']['screen_name'].lower()] = 1
-                        print("({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']))
+                        print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name'])
                         if sound == True:
                             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
                 else:
                     tweeters[tweet['user']['screen_name'].lower()] = 1
-                    print("({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']))
+                    print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name'])
                     if sound == True:
                         winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
@@ -134,13 +188,13 @@ while True:
                     if tweet['id'] in mentions.keys():
                         if mentions[tweet['id']] == 0:
                             mentions[tweet['id']] = 1
-                            print("({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']))
+                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text'])
                             if sound == True:
                                 winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
                     else:
                         mentions[tweet['id']] = 1
-                        print("({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']))
+                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text'])
                         if sound == True:
                             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
@@ -169,5 +223,4 @@ while True:
 ######    tweet['user']['following'] : whether is following authenticator
 ######    tweet['user']['created_at'] : date and time of creating user account
         
-
 

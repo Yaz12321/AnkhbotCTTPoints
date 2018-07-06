@@ -1,5 +1,12 @@
 ﻿{
   "output_file": "settings.json",
+    "": {
+    "type": "textbox",
+    "value": "",
+  	"label": "Hover your mouse over the empty box below",
+    "tooltip": "1- Save settings before enabling the script \r\n2- Enabling the script will open a black window. DO NOT close it. \r\n3- The black window will display CTT's and Mentions (if enabled) \r\n but is also needed to monitor twitter. \r\n4- Make sure to close the black window if you are to change the settings (especially those that say so). \r\n Enabling the command will reopen that window. \r\n5- In CTT Message and Mention search, the script will search for the string as a whole. \r\n6- Remember to send the reset command every time you start your stream.",
+  	"group": "Instructions"
+  },
     "LiveOnly": {
     "type": "checkbox",
     "value": true,
@@ -71,6 +78,22 @@
     "tooltip": "Play sound when a CTT or a Mention happens \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
   	"group": "General"
   },
+    "CTTColour": {
+    "type": "dropdown",
+    "value": "BLACK",
+    "items": ['BLACK', 'BLUE', 'CYAN', 'GREEN', 'MAGENTA', 'RED', 'WHITE', 'YELLOW'],
+    "label": "CTT Notification Text Colour",
+    "tooltip": "Set the text colour for CTT notification \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "group": "General"
+  },
+    "CTTBackground": {
+    "type": "dropdown",
+    "value": "WHITE",
+    "items": ['BLACK', 'BLUE', 'CYAN', 'GREEN', 'MAGENTA', 'RED', 'WHITE', 'YELLOW'],
+    "label": "CTT Notification Background Colour",
+    "tooltip": "Set the background colour for CTT notification \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "group": "General"
+  },
     "WhoIsMsg": {
     "type": "textbox",
     "value": "Who is {0} from Twitter? Respond by {1} [twitter] [twitch]",
@@ -104,6 +127,22 @@
     "value": "",
     "label": "Mention to search for",
     "tooltip": "Mention or key word/phrase to search for. \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "group": "Mentions"
+  },
+    "MentionColour": {
+    "type": "dropdown",
+    "value": "WHITE",
+    "items": ['BLACK', 'BLUE', 'CYAN', 'GREEN', 'MAGENTA', 'RED', 'WHITE', 'YELLOW'],
+    "label": "Mention Notification Text Colour",
+    "tooltip": "Set the text colour for mention notification \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "group": "Mentions"
+  },
+    "MentionBG": {
+    "type": "dropdown",
+    "value": "BLACK",
+    "items": ['BLACK', 'BLUE', 'CYAN', 'GREEN', 'MAGENTA', 'RED', 'WHITE', 'YELLOW'],
+    "label": "Mention Notification Background Colour",
+    "tooltip": "Set the background colour for mention notification \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
     "group": "Mentions"
   },
 
