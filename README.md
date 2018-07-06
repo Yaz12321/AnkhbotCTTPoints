@@ -10,16 +10,16 @@ Instructions:
 
   	To get customer key/secret and access token/secret:
   
-  	1- go to https://apps.twitter.com
+  a- go to https://apps.twitter.com
   
-  	2- create a new app.
+  b- create a new app.
   
-  	3- in the app, you will get your customer key and secret.
+  c- in the app, you will get your customer key and secret.
   
-  	4- from the app, create access token.
+  d- from the app, create access token.
   
   
-3- open Command Prompt, and type "start C:\python27\scripts\pip.exe install TwitterSearch" to install TwitterSearch library. When it is installed, install colorama library: "start C:\python27\scripts\pip.exe install colorama"
+3- open Command Prompt, and type "start C:\python27\scripts\pip.exe install TwitterSearch" (without quotes) to install TwitterSearch library. When it is installed, install colorama library: "start C:\python27\scripts\pip.exe install colorama"
 
 4- On Chatbot, make sure to set your Twitter message and saving settings before running/enabling the command.
 
