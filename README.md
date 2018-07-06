@@ -14,7 +14,7 @@ Instructions:
   
     b- create a new app.
   
-    c- in the app, you will get your customer key and secret.
+    c- in the app, under 'Keys and Access Tokens' you will get your customer key and secret.
   
     d- from the app, create access token.
   
