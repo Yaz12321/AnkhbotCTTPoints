@@ -59,7 +59,7 @@
   },
     "RefreshTime": {
     "type": "numberbox",
-    "value": 10,
+    "value": 1,
     "label": "Refresh CTT List time (minutes)",
     "tooltip": "How often do you want to refresh the CTT List? \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
     "group": "General"
