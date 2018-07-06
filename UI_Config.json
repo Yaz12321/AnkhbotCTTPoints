@@ -61,7 +61,7 @@
     "type": "numberbox",
     "value": 1,
     "label": "Refresh CTT List time (minutes)",
-    "tooltip": "How often do you want to refresh the CTT List? \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "How often do you want to refresh the CTT List? Do NOT set to 0. \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
     "group": "General"
   },
     "WhoIsMsg": {
