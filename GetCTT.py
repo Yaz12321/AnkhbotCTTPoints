@@ -1,7 +1,7 @@
 #---------------------------------------
 #	Import Libraries
 #---------------------------------------
-import sys, json, os, codecs, time
+import sys, json, os, codecs, time, winsound
 
 from TwitterSearch import *
 
@@ -36,6 +36,7 @@ CTTMsg = Settings['CTTMsg']
 RefreshTime = Settings['RefreshTime']
 MentionsOn = Settings['MentionsOn']
 Mention = Settings['Mention']
+sound = Settings['Sound']
 Settingsf.close()
 
 Keysf = open("{}\keys.txt".format(path),"r+")
@@ -50,12 +51,14 @@ mentions = {'Empty': 2}
 tim = time.time()
 while True:
    
+    
+   
     try:
         tso = TwitterSearchOrder() # create a TwitterSearchOrder object
         tso.set_keywords([CTTMsg]) # let's define all words we would like to have a look for
         tso.set_language('en') # we want to see English tweets only
         tso.set_include_entities(False) # and don't give us all those entity information
-        # it's about time to create a TwitterSearch object with our secret tokens
+        # Deal with authentication
         ts = TwitterSearch(
             consumer_key = Keys['consumer_key'],
             consumer_secret = Keys['consumer_secret'],
@@ -75,17 +78,22 @@ while True:
         
         
         
-         # this is where the fun actually starts :)
+         # Search Twitter
         for tweet in ts.search_tweets_iterable(tso):
-            
+            # if user is not marked 1 (CTT but not reveived points), add to list marked 1.
             if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
                 if tweet['user']['screen_name'].lower() in tweeters.keys():
                     if tweeters[tweet['user']['screen_name'].lower()] == 0:
                         tweeters[tweet['user']['screen_name'].lower()] = 1
                         print("({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']))
+                        if sound == True:
+                            winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
                 else:
                     tweeters[tweet['user']['screen_name'].lower()] = 1
                     print("({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']))
+                    if sound == True:
+                        winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
+
 
         pendingf = open("{}\Pending.txt".format(path),"w+") # add Services/Scripts/CTT to file
         pendingf.write(str(tweeters))
@@ -94,7 +102,7 @@ while True:
 
         #print(tweet)
 
-    except TwitterSearchException as e: # take care of all those ugly errors if there are some
+    except TwitterSearchException as e: # take care of all errors
         print(e)
         #Parent.SendTwitchMessage("e")
 
@@ -104,7 +112,7 @@ while True:
             tso.set_keywords([Mention]) # set key word to be searched for
             tso.set_language('en') # we want to see English tweets only
             tso.set_include_entities(False) # and don't give us all those entity information
-            # it's about time to create a TwitterSearch object with our secret tokens
+            # Deal with authentication
             ts = TwitterSearch(
                 consumer_key = Keys['consumer_key'],
                 consumer_secret = Keys['consumer_secret'],
@@ -119,28 +127,34 @@ while True:
             
             
             
-             # this is where the fun actually starts :)
+             # Search twitter:
             for tweet in ts.search_tweets_iterable(tso):
-                
+                # if new mention, display on window, and add to mentions list.
                 if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
                     if tweet['id'] in mentions.keys():
                         if mentions[tweet['id']] == 0:
                             mentions[tweet['id']] = 1
                             print("({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']))
+                            if sound == True:
+                                winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
+
                     else:
                         mentions[tweet['id']] = 1
                         print("({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']))
+                        if sound == True:
+                            winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
 
-        except TwitterSearchException as e: # take care of all those ugly errors if there are some
+
+        except TwitterSearchException as e: # take care of all  errors 
             print(e)
             #Parent.SendTwitchMessage("e")
 
 
-
+    ## Delay next refresh
     time.sleep(RefreshTime*60)
 
-
+######    OTHER PARAMETERS THAT CAN BE USED FROM TWEET:
 ######    tweet['text'] : text of tweet
 ######    tweet['id'] : id of tweet
 ######    tweet['retweet_count']: number of retweets

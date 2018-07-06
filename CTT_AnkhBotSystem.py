@@ -135,7 +135,7 @@ def Execute(data):
 
     if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.StartUpdatecmd :
         path = os.path.dirname(os.path.abspath(__file__))
-        os.system("start {}\GetCTT.py".format(path))
+        os.system("start \"\" \"{}\GetCTT.py\"".format(path))
 
 
     return
@@ -205,10 +205,15 @@ def Unload():
     return
 
 def ScriptToggled(status):
-    if status == True:
+    if MySettings.LiveOnly == False:
+        live = True
+    else:
+       live = Parent.IsLive()
+       
+    if status == True and live == True:
         os.system("taskkill /IM python.exe")
         path = os.path.dirname(os.path.abspath(__file__))
-        os.system("start {}\GetCTT.py".format(path))
+        os.system("start \"\" \"{}\GetCTT.py\"".format(path))
         
     return
 

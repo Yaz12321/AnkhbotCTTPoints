@@ -64,6 +64,13 @@
     "tooltip": "How often do you want to refresh the CTT List? Do NOT set to 0. \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
     "group": "General"
   },
+    "Sound": {
+    "type": "checkbox",
+    "value": true,
+  	"label": "Play sound",
+    "tooltip": "Play sound when a CTT or a Mention happens \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+  	"group": "General"
+  },
     "WhoIsMsg": {
     "type": "textbox",
     "value": "Who is {0} from Twitter? Respond by {1} [twitter] [twitch]",
