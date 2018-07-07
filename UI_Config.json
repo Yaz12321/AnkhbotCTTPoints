@@ -56,7 +56,7 @@
     "type": "textbox",
     "value": "",
   	"label": "CTT message",
-    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\" \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
+    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\" \r\n Do not leave empty! \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
   	"group": "General"
   },
     "Permission": {
@@ -151,7 +151,7 @@
     "type": "textbox",
     "value": "",
     "label": "Mention to search for",
-    "tooltip": "Mention or key word/phrase to search for. \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
+    "tooltip": "Mention or key word/phrase to search for. \r\n If Mentions enabled: Do not leave empty! \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
     "group": "Mentions"
   },
     "MentionColour": {
