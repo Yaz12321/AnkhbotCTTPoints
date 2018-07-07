@@ -7,7 +7,12 @@ import sys, json, os, codecs, time, winsound
 
 from TwitterSearch import *
 from ast import literal_eval
+from datetime import datetime, timedelta
 
+import colorama
+from colorama import init
+init()
+from colorama import Fore, Back, Style
 
 
 #---------------------------------------
@@ -28,15 +33,18 @@ Description = "Part 1: Create a list of viewers who CTT"
 # > 1.0< 
     # Official Release
 
-import colorama
-from colorama import init
-init()
-from colorama import Fore, Back, Style
+
+
+
+#Get local time difference to UTC 
+DTS = time.localtime().tm_isdst
+TZ = time.timezone
+TD = DTS - TZ
 
 
 
 
-
+#Get variables from Settings file
 path = os.path.dirname(os.path.abspath(__file__))
 Settingsf = codecs.open("{}\settings.json".format(path),encoding='utf-8-sig',mode="r+")
 Settings = dict()
@@ -52,6 +60,8 @@ MentionBG = Settings['MentionBG']
 sound = Settings['Sound']
 Settingsf.close()
 
+#Set text and background colours
+#Running code in Python Shell will not show colours, but codes. Colours only work in CMD
 def Tcolour(colour):
     if colour == "RED":    
         return(Fore.RED)
@@ -88,30 +98,32 @@ def Bcolour(colour):
     elif colour == "YELLOW":
         return(Back.YELLOW)    
     
+#Print colour codes for user
+print Tcolour(CTTColour) + Bcolour(CTTBG) + "This is a CTT" + Fore.RESET + Back.RESET
+print Tcolour(MentionColour) + Bcolour(MentionBG) + "This is a Mention" + Fore.RESET + Back.RESET
 
-print Tcolour(CTTColour) + Bcolour(CTTBG) + "CTT" + Fore.RESET + Back.RESET
-print Tcolour(MentionColour) + Bcolour(MentionBG) + "Mention" + Fore.RESET + Back.RESET
-
+#Get Twitter keys
 Keysf = open("{}\keys.txt".format(path),"r+")
 Keysr = Keysf.read()
 Keys = dict()
 Keys = literal_eval(Keysr)
 Keysf.close()
 
+#Create Mentions list
 mentions = dict()
 mentions = {'Empty': 2}
 
-tim = time.time()
 
 while True:
 
-    
-   
     try:
         tso = TwitterSearchOrder() # create a TwitterSearchOrder object
         tso.set_keywords([CTTMsg]) # let's define all words we would like to have a look for
         tso.set_language('en') # we want to see English tweets only
         tso.set_include_entities(False) # and don't give us all those entity information
+##        tso.set_since(datetime.date.today())
+##        tso.set_result_type('recent')
+        
         # Deal with authentication
         ts = TwitterSearch(
             consumer_key = Keys['consumer_key'],
@@ -120,9 +132,11 @@ while True:
             access_token_secret = Keys['access_token_secret']
          )
         
+        #Get Today
+        day = time.strftime("%a %b %d",time.gmtime()) 
+        year = time.strftime("%Y",time.gmtime())
 
-        day = time.strftime("%a %b %d",time.localtime())
-        year = time.strftime("%Y",time.localtime())
+        #Get CTT List
         path = os.path.dirname(os.path.abspath(__file__))
         pendingf = open('{}\Pending.txt'.format(path),'r+')
         Tread = pendingf.read()
@@ -130,31 +144,29 @@ while True:
         tweeters = literal_eval(Tread)
         pendingf.close()
         
-        
-        
          # Search Twitter
         for tweet in ts.search_tweets_iterable(tso):
+            TweetLocalTime = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y') + timedelta(hours = TD) 
             # if user is not marked 1 (CTT but not reveived points), add to list marked 1.
             if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
                 if tweet['user']['screen_name'].lower() in tweeters.keys():
                     if tweeters[tweet['user']['screen_name'].lower()] == 0:
                         tweeters[tweet['user']['screen_name'].lower()] = 1
-                        print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']) + Fore.RESET + Back.RESET
+                        print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(TweetLocalTime,tweet['user']['screen_name']) + Fore.RESET + Back.RESET
                         if sound == True:
                             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
                 else:
                     tweeters[tweet['user']['screen_name'].lower()] = 1
-                    print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(tweet['created_at'],tweet['user']['screen_name']) + Fore.RESET + Back.RESET
+                    print Tcolour(CTTColour) + Bcolour(CTTBG) + "({}) CTT: @{}".format(TweetLocalTime,tweet['user']['screen_name']) + Fore.RESET + Back.RESET
                     if sound == True:
                         winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
-
+        #Return CTT list to file
         pendingf = open("{}\Pending.txt".format(path),"w+") # add Services/Scripts/CTT to file
         pendingf.write(str(tweeters))
-        #print(time.strftime("%a %b %d %H:%M:%S +0000 %Y",time.localtime()))
+        
         pendingf.close()
 
-        #print(tweet)
 
     except TwitterSearchException as e: # take care of all errors
         print(e)
@@ -174,27 +186,24 @@ while True:
                 access_token_secret = Keys['access_token_secret']
              )
             
-
-            day = time.strftime("%a %b %d",time.localtime())
-            year = time.strftime("%Y",time.localtime())
-
-            
-            
-            
              # Search twitter:
             for tweet in ts.search_tweets_iterable(tso):
+                                
+                TweetLocalTime = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y') + timedelta(hours = TD) 
+                
                 # if new mention, display on window, and add to mentions list.
                 if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
                     if tweet['id'] in mentions.keys():
                         if mentions[tweet['id']] == 0:
                             mentions[tweet['id']] = 1
-                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
+                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(TweetLocalTime,tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
                             if sound == True:
                                 winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
                     else:
                         mentions[tweet['id']] = 1
-                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
+                        
+                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(TweetLocalTime,tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
                         if sound == True:
                             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
@@ -213,7 +222,7 @@ while True:
 ######    tweet['id'] : id of tweet
 ######    tweet['retweet_count']: number of retweets
 ######    tweet['favorite_count'] : number of likes
-######    tweet['created_at'] : date and time of creating tweet
+######    tweet['created_at'] : date and time of creating tweet (in UTC)
 ######    tweet['user']['name'] : Display name
 ######    tweet['user']['screen_name'] : @name
 ######    tweet['user']['id'] : user id
@@ -221,6 +230,6 @@ while True:
 ######    tweet['user']['friend_count'] : number of user's friends
 ######    tweet['user']['location'] : location of user
 ######    tweet['user']['following'] : whether is following authenticator
-######    tweet['user']['created_at'] : date and time of creating user account
+######    tweet['user']['created_at'] : date and time of creating user account (in UTC)
         
 
