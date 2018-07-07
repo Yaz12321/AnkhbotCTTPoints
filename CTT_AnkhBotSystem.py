@@ -50,6 +50,7 @@ class Settings:
             self.CTTPayout = 30
             self.RefreshTime = 10
             self.ResetMsg = "CTT List has been reset"
+            self.WhoIsPtf = "Whisper"
             
     # Reload settings on save through UI
     def ReloadSettings(self, data):
@@ -175,7 +176,10 @@ def AddP():
                     Parent.SendTwitchMessage(MySettings.GetPointsMsg.format(CTT,MySettings.CTTPayout,Parent.GetCurrencyName()))
             else:
                 #if not in conversion list, ask streamer to provide twitch account.
-                Parent.SendStreamWhisper(Parent.GetChannelName(),MySettings.WhoIsMsg.format(CTT,MySettings.WhoIscmd))
+                if MySettings.WhoIsPtf == "Whisper":
+                    Parent.SendStreamWhisper(Parent.GetChannelName(),MySettings.WhoIsMsg.format(CTT,MySettings.WhoIscmd))
+                else:
+                    Parent.SendTwitchMessage(MySettings.WhoIsMsg.format(CTT,MySettings.WhoIscmd))
 
     #Save list back to file.
     fil = open("Services/Scripts/CTT/Pending.txt","w+")

@@ -1,11 +1,12 @@
 ﻿{
   "output_file": "settings.json",
     "": {
-    "type": "textbox",
-    "value": "",
-  	"label": "Hover your mouse over the empty box below",
-    "tooltip": "1- Save settings before enabling the script \r\n2- Enabling the script will open a black window. DO NOT close it. \r\n3- The black window will display CTT's and Mentions (if enabled) \r\n but is also needed to monitor twitter. \r\n4- Make sure to close the black window if you are to change the settings (especially those that say so). \r\n Enabling the command will reopen that window. \r\n5- In CTT Message and Mention search, the script will search for the string as a whole. \r\n6- Remember to send the reset command every time you start your stream.",
-  	"group": "Instructions"
+    "type": "button",
+    "label": "Hover your mouse here for instructions",
+    "tooltip": "1- Save settings before enabling the script \r\n2- Enabling the script will open a black window. DO NOT close it. \r\n3- The black window will display CTT's and Mentions (if enabled) \r\n but is also needed to monitor twitter. \r\n4- If you make changes to settings, after saving: clip on Open Twitter Monitor button. \r\n5- If the script is set to Live Only, and you enable the script before going live, click on Open Twitter Monitor button. \r\n6- In CTT Message and Mention search, the script will search for the string as a whole. \r\n7- Remember to Reset every time you start your stream.",
+    "function": "",
+    "wsevent": "",
+    "group": "General"
   },
     "LiveOnly": {
     "type": "checkbox",
@@ -55,7 +56,7 @@
     "type": "textbox",
     "value": "",
   	"label": "CTT message",
-    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\" \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\" \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
   	"group": "General"
   },
     "Permission": {
@@ -84,14 +85,14 @@
     "type": "numberbox",
     "value": 1,
     "label": "Refresh CTT List time (minutes)",
-    "tooltip": "How often do you want to refresh the CTT List? Do NOT set to 0. \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "How often do you want to refresh the CTT List? Do NOT set to 0. \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
     "group": "General"
   },
     "Sound": {
     "type": "checkbox",
     "value": true,
   	"label": "Play sound",
-    "tooltip": "Play sound when a CTT or a Mention happens \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "Play sound when a CTT or a Mention happens \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
   	"group": "General"
   },
     "CTTColour": {
@@ -99,7 +100,7 @@
     "value": "BLACK",
     "items": ['BLACK', 'BLUE', 'CYAN', 'GREEN', 'MAGENTA', 'RED', 'WHITE', 'YELLOW'],
     "label": "CTT Notification Text Colour",
-    "tooltip": "Set the text colour for CTT notification \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "Set the text colour for CTT notification \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
     "group": "General"
   },
     "CTTBackground": {
@@ -107,14 +108,22 @@
     "value": "WHITE",
     "items": ['BLACK', 'BLUE', 'CYAN', 'GREEN', 'MAGENTA', 'RED', 'WHITE', 'YELLOW'],
     "label": "CTT Notification Background Colour",
-    "tooltip": "Set the background colour for CTT notification \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "Set the background colour for CTT notification \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
     "group": "General"
   },
     "WhoIsMsg": {
     "type": "textbox",
     "value": "Who is {0} from Twitter? Respond by {1} [twitter] [twitch]",
     "label": "Who Is message",
-    "tooltip": "Sent through twitch whispers. \r\n{0} = twitter account \r\n {1} = Respond command",
+    "tooltip": "{0} = twitter account \r\n {1} = Respond command",
+    "group": "Responses"
+  },
+    "WhoIsPtf": {
+    "type": "dropdown",
+    "value": "Whisper",
+    "items": ["Whisper","Chat"],
+    "label": "Send Who Is message to Twitch:",
+    "tooltip": "Where do you want to receive the Who Is message?",
     "group": "Responses"
   },
     "GetPointsMsg": {
@@ -135,14 +144,14 @@
     "type": "checkbox",
     "value": false,
   	"label": "Receive Twitter Mentions?",
-    "tooltip": "Receive twitter mentions. \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "Receive twitter mentions. \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
   	"group": "Mentions"
   },
     "Mention": {
     "type": "textbox",
     "value": "",
     "label": "Mention to search for",
-    "tooltip": "Mention or key word/phrase to search for. \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "Mention or key word/phrase to search for. \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
     "group": "Mentions"
   },
     "MentionColour": {
@@ -150,7 +159,7 @@
     "value": "WHITE",
     "items": ['BLACK', 'BLUE', 'CYAN', 'GREEN', 'MAGENTA', 'RED', 'WHITE', 'YELLOW'],
     "label": "Mention Notification Text Colour",
-    "tooltip": "Set the text colour for mention notification \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "Set the text colour for mention notification \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
     "group": "Mentions"
   },
     "MentionBG": {
@@ -158,7 +167,7 @@
     "value": "BLACK",
     "items": ['BLACK', 'BLUE', 'CYAN', 'GREEN', 'MAGENTA', 'RED', 'WHITE', 'YELLOW'],
     "label": "Mention Notification Background Colour",
-    "tooltip": "Set the background colour for mention notification \r\n IF CHANGED: DISABLE AND ENABLE SCRIPT AFTER SAVING",
+    "tooltip": "Set the background colour for mention notification \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
     "group": "Mentions"
   },
 
