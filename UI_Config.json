@@ -56,7 +56,7 @@
     "type": "textbox",
     "value": "",
   	"label": "CTT message",
-    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: replace any single or double quotes with \\\' or \\\" \r\n Do not leave empty! \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
+    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: Do not include any non-ascii characters (such as left/right single/double quotes, backslash), " \r\n Do not leave empty! \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
   	"group": "General"
   },
     "Permission": {
@@ -113,7 +113,7 @@
   },
     "WhoIsMsg": {
     "type": "textbox",
-    "value": "Who is {0} from Twitter? Respond by {1} [twitter] [twitch]",
+    "value": "Who is @{0}? Respond by {1} [twitter] [twitch]",
     "label": "Who Is message",
     "tooltip": "{0} = twitter account \r\n {1} = Respond command",
     "group": "Responses"
