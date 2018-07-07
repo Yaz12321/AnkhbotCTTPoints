@@ -38,7 +38,7 @@ Description = "Part 1: Create a list of viewers who CTT"
 
 #Get local time difference to UTC 
 DTS = time.localtime().tm_isdst
-TZ = time.timezone
+TZ = time.timezone / 3600
 TD = DTS - TZ
 
 
