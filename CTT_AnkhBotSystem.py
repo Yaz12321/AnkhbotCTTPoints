@@ -81,8 +81,7 @@ def Init():
     global Trigger
     Trigger = 0
     global n
-    n = 0
-    
+    n = 0        
    
     global MySettings
     # Load in saved settings
@@ -105,11 +104,13 @@ def ReloadSettings(jsonData):
     return
 
 
+
 def Execute(data):
+    path = os.path.dirname(os.path.abspath(__file__))
 
     #Reset List
     if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.Resetcmd:
-        fil = open("Services/Scripts/AnkhbotCTTPoints-master/Pending.txt","w+")
+        fil = open("{}/Pending.txt".format(path),"w+")
         fil.write("{'Empty': 2}")
         fil.close()
         Parent.SendTwitchMessage(MySettings.ResetMsg)
@@ -123,39 +124,39 @@ def Execute(data):
     if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.WhoIscmd :
         tweetac = data.GetParam(1)
         twitchac = data.GetParam(2)
-        f = open("Services/Scripts/AnkhbotCTTPoints-master/whois.txt","r+")
+        f = open("{}/whois.txt".format(path),"r+")
         accounts = dict()
         accounts = literal_eval(f.read())
         f.close()
         accounts[tweetac] = twitchac
-        f = open("Services/Scripts/AnkhbotCTTPoints-master/whois.txt","w+")
+        f = open("{}/whois.txt".format(path),"w+")
         f.write(str(accounts))
         f.close()
         Parent.SendStreamWhisper(Parent.GetChannelName(),"Twitch account {} has been assigned to @{}".format(twitchac,tweetac))
         AddP()
 
     if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.StartUpdatecmd :
-        path = os.path.dirname(os.path.abspath(__file__))
         os.system("start \"\" \"{}\GetCTT.py\"".format(path))
 
 
     return
 
 def AddP():
+    path = os.path.dirname(os.path.abspath(__file__))
 
     
     global t
     t = time.time()
 
     #Get Twitter-to-Twitch conversion list
-    f = open("Services/Scripts/AnkhbotCTTPoints-master/whois.txt","r+")
+    f = open("{}/whois.txt".format(path),"r+")
     accounts = dict()
     accounts = literal_eval(f.read())
     f.close()
     
     #Get CTT List
     tweets = dict()
-    fil = open("Services/Scripts/AnkhbotCTTPoints-master/Pending.txt","r+")  
+    fil = open("{}/Pending.txt".format(path),"r+")  
     tweets = literal_eval(fil.read())
     fil.close()
 
@@ -182,7 +183,7 @@ def AddP():
                     Parent.SendTwitchMessage(MySettings.WhoIsMsg.format(CTT,MySettings.WhoIscmd))
 
     #Save list back to file.
-    fil = open("Services/Scripts/AnkhbotCTTPoints-master/Pending.txt","w+")
+    fil = open("{}/Pending.txt".format(path),"w+")
     fil.write(str(tweets))
     fil.close()
     
@@ -191,7 +192,8 @@ def AddP():
     return
 
 def ResetBtn():
-    fil = open("Services/Scripts/AnkhbotCTTPoints-master/Pending.txt","w+")
+    path = os.path.dirname(os.path.abspath(__file__))
+    fil = open("{}/Pending.txt".format(path),"w+")
     fil.write("{'Empty': 2}")
     fil.close()
     Parent.SendTwitchMessage(MySettings.ResetMsg)
