@@ -6,7 +6,7 @@ Instructions:
 
 1- After importing to Chatobt, go to scripts folder, and rename the AnkhbotCTTPoints folder to CTT.
 
-2- open keys.txt, and fill in your customer key/secret and access token/secret between the single quotes.
+2- Open EmptyKeys folder, and copy the files into the main folder. open keys.txt, and fill in your customer key/secret and access token/secret between the single quotes.
 
   	To get customer key/secret and access token/secret:
   
