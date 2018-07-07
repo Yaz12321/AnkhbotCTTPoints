@@ -188,13 +188,13 @@ while True:
                     if tweet['id'] in mentions.keys():
                         if mentions[tweet['id']] == 0:
                             mentions[tweet['id']] = 1
-                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']) + Fore.RESET + Back.RESET
+                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
                             if sound == True:
                                 winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
                     else:
                         mentions[tweet['id']] = 1
-                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text']) + Fore.RESET + Back.RESET
+                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(tweet['created_at'],tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
                         if sound == True:
                             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
