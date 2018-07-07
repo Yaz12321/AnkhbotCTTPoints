@@ -56,7 +56,7 @@
     "type": "textbox",
     "value": "",
   	"label": "CTT message",
-    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n IMPORTANT: Do not include any non-ascii characters (such as left/right single/double quotes, backslash) \r\n Do not leave empty! \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
+    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n Do not copy paste the message into here, retype it to avoid errors. \r\n Do not leave empty! \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
   	"group": "General"
   },
     "Permission": {
