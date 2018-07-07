@@ -192,7 +192,7 @@ while True:
                 TweetLocalTime = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y') + timedelta(hours = TD) 
                 
                 # if new mention, display on window, and add to mentions list.
-                if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year):
+                if tweet['created_at'].startswith(day) and tweet['created_at'].endswith(year) and CTTMsg not in tweet['text']:
                     if tweet['id'] in mentions.keys():
                         if mentions[tweet['id']] == 0:
                             mentions[tweet['id']] = 1
