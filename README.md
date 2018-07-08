@@ -10,9 +10,9 @@ Instructions:
   
       a- Login to the apps.twitter.com interface using your Twitter credentials
 
-      b- Create an app or open an existing app that you would like to create access tokens for
+      b- Create an app 
       
-      c- Navigate to the 'Keys and Access Tokens' page (That's where consumer key/secter are)
+      c- Open the app, and navigate to the 'Keys and Access Tokens' page (That's where consumer key/secter are)
 
       d- Scroll down and click on the 'Create my access token' button (That's when you get your access token/secret)
 
