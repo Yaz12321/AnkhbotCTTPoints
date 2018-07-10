@@ -122,8 +122,8 @@ def Execute(data):
     
     #Get twitch account from streamer
     if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.WhoIscmd :
-        tweetac = data.GetParam(1)
-        twitchac = data.GetParam(2)
+        tweetac = data.GetParam(1).lower()
+        twitchac = data.GetParam(2).lower()
         f = open("{}/whois.txt".format(path),"r+")
         accounts = dict()
         accounts = literal_eval(f.read())
@@ -132,11 +132,14 @@ def Execute(data):
         f = open("{}/whois.txt".format(path),"w+")
         f.write(str(accounts))
         f.close()
-        Parent.SendStreamWhisper(Parent.GetChannelName(),"Twitch account {} has been assigned to @{}".format(twitchac,tweetac))
+        if data.IsWhisper():
+            Parent.SendStreamWhisper(Parent.GetChannelName(),"Twitch account {} has been assigned to @{}".format(twitchac,tweetac))
+        else:
+            Parent.SendTwitchMessage("Twitch account {} has been assigned to @{}".format(twitchac,tweetac))
         AddP()
 
     if Parent.HasPermission(data.User, MySettings.Permission, MySettings.PermissionInfo) and data.GetParam(0).lower() == MySettings.StartUpdatecmd :
-        os.system("start \"\" \"{}\GetCTT.py\"".format(path))
+        os.system("start \"\" /B \"{}\GetCTT.py\"".format(path))
 
 
     return
@@ -174,13 +177,13 @@ def AddP():
                     #Change their mark to 2 (given points)
                     tweets[CTT] = 2
                     #Announce on chat
-                    Parent.SendTwitchMessage(MySettings.GetPointsMsg.format(CTT,MySettings.CTTPayout,Parent.GetCurrencyName()))
+                    Parent.SendTwitchMessage(MySettings.GetPointsMsg.format(twitcha,MySettings.CTTPayout,Parent.GetCurrencyName()))
             else:
                 #if not in conversion list, ask streamer to provide twitch account.
                 if MySettings.WhoIsPtf == "Whisper":
                     Parent.SendStreamWhisper(Parent.GetChannelName(),MySettings.WhoIsMsg.format(CTT,MySettings.WhoIscmd))
                 else:
-                    Parent.SendTwitchMessage(MySettings.WhoIsMsg.format(CTT,MySettings.WhoIscmd))
+                    Parent.SendTwitchMessage(MySettings.WhoIsMsg.format(twitcha,MySettings.WhoIscmd))
 
     #Save list back to file.
     fil = open("{}/Pending.txt".format(path),"w+")
@@ -202,7 +205,7 @@ def ResetBtn():
 def GetCTTBtn():
     os.system("taskkill /IM python.exe")
     path = os.path.dirname(os.path.abspath(__file__))
-    os.system("start \"\" \"{}\GetCTT.py\"".format(path))
+    os.system("start \"\" /B \"{}\GetCTT.py\"".format(path))
     
 
 def Tick():
@@ -230,7 +233,7 @@ def ScriptToggled(status):
     if status == True and live == True:
         os.system("taskkill /IM python.exe")
         path = os.path.dirname(os.path.abspath(__file__))
-        os.system("start \"\" \"{}\GetCTT.py\"".format(path))
+        os.system("start \"\" /B \"{}\GetCTT.py\"".format(path))
         
     return
 

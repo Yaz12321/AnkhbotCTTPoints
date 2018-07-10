@@ -56,7 +56,7 @@
     "type": "textbox",
     "value": "",
   	"label": "CTT message",
-    "tooltip": "Message included in Tweet. Script will search for this message on twitter. \r\n Do not copy paste the message into here, retype it to avoid errors. \r\n Do not leave empty! \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
+    "tooltip": " Message included in Tweet to search for. \r\n Separate key words/phrases with a , (comma). (search is based on AND not OR)  \r\n Do not copy paste the message into here, retype it to avoid errors. \r\n Do not leave empty! \r\n First word/phrase is used for the Mentions notification. \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
   	"group": "General"
   },
     "Permission": {
@@ -144,15 +144,8 @@
     "type": "checkbox",
     "value": false,
   	"label": "Receive Twitter Mentions?",
-    "tooltip": "Receive twitter mentions. \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
+    "tooltip": "Receive twitter mentions (Based on first word in CTT Message) \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
   	"group": "Mentions"
-  },
-    "Mention": {
-    "type": "textbox",
-    "value": "",
-    "label": "Mention to search for",
-    "tooltip": "Mention or key word/phrase to search for. \r\n If Mentions enabled: Do not leave empty! \r\n IF CHANGED: REOPEN TWITTER MONITOR AFTER SAVING",
-    "group": "Mentions"
   },
     "MentionColour": {
     "type": "dropdown",

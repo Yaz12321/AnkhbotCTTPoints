@@ -14,6 +14,8 @@ from colorama import init
 init()
 from colorama import Fore, Back, Style
 
+from twython import TwythonStreamer  
+import csv
 
 #---------------------------------------
 #	[Required]	Script Information
@@ -21,7 +23,7 @@ from colorama import Fore, Back, Style
 ScriptName = "CTTupdate"
 Website = ""
 Creator = "Yaz12321"
-Version = "1.0"
+Version = "2.0"
 Description = "Part 1: Create a list of viewers who CTT"
 
 #---------------------------------------
@@ -30,35 +32,35 @@ Description = "Part 1: Create a list of viewers who CTT"
 
 # Version:
 
+# > 2.0 <
+    # Changed tweet retreival approach to streaming.
+
 # > 1.0< 
     # Official Release
 
 
+class g:
 
-
-#Get local time difference to UTC 
-DTS = time.localtime().tm_isdst
-TZ = time.timezone / 3600
-TD = DTS - TZ
-
-
-
-
-#Get variables from Settings file
-path = os.path.dirname(os.path.abspath(__file__))
-Settingsf = codecs.open("{}\settings.json".format(path),encoding='utf-8-sig',mode="r+")
-Settings = dict()
-Settings = json.load(Settingsf, encoding='utf-8-sig')
-CTTMsg = Settings['CTTMsg']
-RefreshTime = Settings['RefreshTime']
-MentionsOn = Settings['MentionsOn']
-Mention = Settings['Mention']
-CTTColour = Settings['CTTColour']
-CTTBG = Settings['CTTBackground']
-MentionColour = Settings['MentionColour']
-MentionBG = Settings['MentionBG']
-sound = Settings['Sound']
-Settingsf.close()
+    #Get local time difference to UTC 
+    DTS = time.localtime().tm_isdst
+    TZ = time.timezone / 3600
+    TD = DTS - TZ
+    #Get variables from Settings file
+    path = os.path.dirname(os.path.abspath(__file__))
+    Settingsf = codecs.open("{}\settings.json".format(path),encoding='utf-8-sig',mode="r+")
+    Settings = dict()
+    Settings = json.load(Settingsf, encoding='utf-8-sig')
+    Settingsf.close()
+    CTTMsg = Settings['CTTMsg'].split(",")
+    RefreshTime = Settings['RefreshTime']
+    MentionsOn = Settings['MentionsOn']
+    Mention = CTTMsg[0]
+    CTTColour = Settings['CTTColour']
+    CTTBG = Settings['CTTBackground']
+    MentionColour = Settings['MentionColour']
+    MentionBG = Settings['MentionBG']
+    sound = Settings['Sound']
+    
 
 #Set text and background colours
 #Running code in Python Shell will not show colours, but codes. Colours only work in CMD
@@ -99,22 +101,93 @@ def Bcolour(colour):
         return(Back.YELLOW)    
     
 #Print colour codes for user
-print Tcolour(CTTColour) + Bcolour(CTTBG) + "This is a CTT" + Fore.RESET + Back.RESET
-print Tcolour(MentionColour) + Bcolour(MentionBG) + "This is a Mention" + Fore.RESET + Back.RESET
+print Tcolour(g.CTTColour) + Bcolour(g.CTTBG) + "This is a CTT" + Fore.RESET + Back.RESET
+print Tcolour(g.MentionColour) + Bcolour(g.MentionBG) + "This is a Mention" + Fore.RESET + Back.RESET
 
 #Get Twitter keys
-Keysf = open("{}\keys.txt".format(path),"r+")
+Keysf = open("{}\keys.txt".format(g.path),"r+")
 Keysr = Keysf.read()
 Keys = dict()
 Keys = literal_eval(Keysr)
 Keysf.close()
 
 #Create Mentions list
+global mentions
 mentions = dict()
 mentions = {'Empty': 2}
 
+##global path
+##path = os.path.dirname(os.path.abspath(__file__))
+def process_tweet(tweet):  
+    d = {}
+    d['hashtags'] = [hashtag['text'] for hashtag in tweet['entities']['hashtags']]
+    d['text'] = tweet['text']
+    d['user'] = tweet['user']['screen_name']
+    d['user_loc'] = tweet['user']['location']
 
-while True:
+    TweetLocalTime = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y') + timedelta(hours = g.TD)    
+    pendingf = open('{}\Pending.txt'.format(g.path),'r+')
+    Tread = pendingf.read()
+    tweeters = dict()
+    tweeters = literal_eval(Tread)
+    pendingf.close()
+
+    
+    if all(w in tweet['text'] for w in g.CTTMsg):
+        if tweet['user']['screen_name'].lower() in tweeters.keys():
+            if tweeters[tweet['user']['screen_name'].lower()] == 0:
+                tweeters[tweet['user']['screen_name'].lower()] = 1
+                print Tcolour(g.CTTColour) + Bcolour(g.CTTBG) + "({}) CTT: @{}".format(TweetLocalTime,tweet['user']['screen_name']) + Fore.RESET + Back.RESET
+                print tweet['text']
+                if g.sound == True:
+                    winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
+        else:
+            tweeters[tweet['user']['screen_name'].lower()] = 1
+            print Tcolour(g.CTTColour) + Bcolour(g.CTTBG) + "({}) CTT: @{}".format(TweetLocalTime,tweet['user']['screen_name']) + Fore.RESET + Back.RESET
+            if g.sound == True:
+                winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
+
+    elif g.MentionsOn:
+        print Tcolour(g.MentionColour) + Bcolour(g.MentionBG) + "({}) {} @{} tweeted: {}".format(TweetLocalTime,tweet['created_at'],tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
+        if g.sound == True:
+          winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
+
+    return tweeters
+
+
+# Create a class that inherits TwythonStreamer
+class MyStreamer(TwythonStreamer):     
+
+    # Received data
+    def on_success(self, data):
+
+        # Only collect tweets in English
+        if data['lang'] == 'en':
+            tweet_data = process_tweet(data)
+            self.save_to_csv(tweet_data)
+            #print tweet_data
+
+    # Problem with the API
+    def on_error(self, status_code, data):
+        print(status_code, data)
+        self.disconnect()
+        winsound.SND_ALIAS
+
+    # Save each tweet to csv file
+    def save_to_csv(self, tweet):
+        pendingf = open("{}\Pending.txt".format(g.path),"w+") # add Services/Scripts/CTT to file
+        pendingf.write(str(tweet))
+        pendingf.close()
+
+stream = MyStreamer(Keys['consumer_key'], Keys['consumer_secret'],  
+                    Keys['access_token'], Keys['access_token_secret'])
+# Start the stream
+stream.statuses.filter(track=g.Mention) 
+
+
+
+#Old approach using iterative search. Disabled.
+while False:
 
     try:
         tso = TwitterSearchOrder() # create a TwitterSearchOrder object
@@ -188,6 +261,7 @@ while True:
             
              # Search twitter:
             for tweet in ts.search_tweets_iterable(tso):
+                
                                 
                 TweetLocalTime = datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y') + timedelta(hours = TD) 
                 
@@ -196,14 +270,14 @@ while True:
                     if tweet['id'] in mentions.keys():
                         if mentions[tweet['id']] == 0:
                             mentions[tweet['id']] = 1
-                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(TweetLocalTime,tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
+                            print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) {} @{} tweeted: {}".format(TweetLocalTime,tweet['created_at'],tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
                             if sound == True:
                                 winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
                     else:
                         mentions[tweet['id']] = 1
                         
-                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) @{} tweeted: {}".format(TweetLocalTime,tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
+                        print Tcolour(MentionColour) + Bcolour(MentionBG) + "({}) {} @{} tweeted: {}".format(TweetLocalTime,tweet['created_at'],tweet['user']['screen_name'],tweet['text'].encode('ascii','ignore')) + Fore.RESET + Back.RESET
                         if sound == True:
                             winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
 
