@@ -5,7 +5,7 @@ print("###Keep This window open. Close if you want to change settings on Streaml
 #---------------------------------------
 import sys, json, os, codecs, time, winsound
 
-from TwitterSearch import *
+#from TwitterSearch import *
 from ast import literal_eval
 from datetime import datetime, timedelta
 
