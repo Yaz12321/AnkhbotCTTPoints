@@ -16,7 +16,7 @@ Instructions:
 
       d- Scroll down and click on the 'Create my access token' button (That's when you get your access token/secret)
 
-2- open Command Prompt, and type "start C:\python27\scripts\pip.exe install TwitterSearch" (without quotes) to install TwitterSearch library. When it is installed, install colorama library: "start C:\python27\scripts\pip.exe install colorama"
+2- open Command Prompt, and type "start C:\python27\scripts\pip.exe install twython" (without quotes) to install twython library (to get twitter data). When it is installed, install colorama library: "start C:\python27\scripts\pip.exe install colorama" (to have coloured text)
 
 3- On Chatbot, make sure to set your Twitter message and saving settings before running/enabling the command.
 
