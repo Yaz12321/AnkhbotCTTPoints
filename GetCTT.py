@@ -104,6 +104,7 @@ def Bcolour(colour):
 print Tcolour(g.CTTColour) + Bcolour(g.CTTBG) + "This is a CTT" + Fore.RESET + Back.RESET
 print Tcolour(g.MentionColour) + Bcolour(g.MentionBG) + "This is a Mention" + Fore.RESET + Back.RESET
 
+
 #Get Twitter keys
 Keysf = open("{}\keys.txt".format(g.path),"r+")
 Keysr = Keysf.read()
@@ -131,14 +132,15 @@ def process_tweet(tweet):
     tweeters = dict()
     tweeters = literal_eval(Tread)
     pendingf.close()
+    
+    
 
     
-    if all(w in tweet['text'] for w in g.CTTMsg):
+    if all(w.lower() in tweet['text'].lower() for w in g.CTTMsg):      
         if tweet['user']['screen_name'].lower() in tweeters.keys():
             if tweeters[tweet['user']['screen_name'].lower()] == 0:
                 tweeters[tweet['user']['screen_name'].lower()] = 1
                 print Tcolour(g.CTTColour) + Bcolour(g.CTTBG) + "({}) CTT: @{}".format(TweetLocalTime,tweet['user']['screen_name']) + Fore.RESET + Back.RESET
-                print tweet['text']
                 if g.sound == True:
                     winsound.PlaySound("SystemExit", winsound.SND_ALIAS)
         else:
@@ -162,10 +164,11 @@ class MyStreamer(TwythonStreamer):
     def on_success(self, data):
 
         # Only collect tweets in English
-        if data['lang'] == 'en':
-            tweet_data = process_tweet(data)
-            self.save_to_csv(tweet_data)
-            #print tweet_data
+        
+        
+        tweet_data = process_tweet(data)
+        self.save_to_csv(tweet_data)
+        #print tweet_data
 
     # Problem with the API
     def on_error(self, status_code, data):
@@ -182,7 +185,7 @@ class MyStreamer(TwythonStreamer):
 stream = MyStreamer(Keys['consumer_key'], Keys['consumer_secret'],  
                     Keys['access_token'], Keys['access_token_secret'])
 # Start the stream
-stream.statuses.filter(track=g.Mention) 
+stream.statuses.filter(track = g.Mention) 
 
 
 
