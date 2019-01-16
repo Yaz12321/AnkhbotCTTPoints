@@ -20,7 +20,7 @@ Instructions:
 
 3- On Chatbot, make sure to set your Twitter message and saving settings before running/enabling the command.
 
-4- Make sure to follow your bot account to receive whispers asking to provide twitch accounts.
+4- Make sure to follow your bot account to receive whispers asking to provide twitch accounts. (Not sure if this is still necessary! But better safe than sorry)
 
 When you start each stream, make sure you send a reset command to empty the list.
 
