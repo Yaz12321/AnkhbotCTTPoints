@@ -1,0 +1,10 @@
+This is an example to show how to fill the keys.txt file:
+
+
+
+{
+  "consumer_key" : 'gdfgojrt43543fgey53453',
+  "consumer_secret" : '4537y6ryhrjwefklj23r23fw',
+  "access_token" : '92342-f-gdfgert3rwefwfg-sgert42r2-wer',
+  "access_token_secret" : 'etergdg43t-fgddrgert-ge-634twrge-fgretew'
+}
