@@ -183,7 +183,7 @@ def AddP():
                 if MySettings.WhoIsPtf == "Whisper":
                     Parent.SendStreamWhisper(Parent.GetChannelName(),MySettings.WhoIsMsg.format(CTT,MySettings.WhoIscmd))
                 else:
-                    Parent.SendTwitchMessage(MySettings.WhoIsMsg.format(twitcha,MySettings.WhoIscmd))
+                    Parent.SendTwitchMessage(MySettings.WhoIsMsg.format(CTT,MySettings.WhoIscmd))
 
     #Save list back to file.
     fil = open("{}/Pending.txt".format(path),"w+")
