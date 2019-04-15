@@ -4,7 +4,8 @@ Scripts for Streamlabs Chatbot to check twitter for CTT, and give points to whoe
 Instructions:
 
 
-1- After importing to Chatbot, open EmptyKeys folder, and copy the files into the main folder (where GetCTT.py is). Open keys.txt, and fill in your customer key/secret and access token/secret between the single quotes (see ExampleKeys.txt for how it should look like).
+1- After importing to Chatbot (Check the bot's documentation on how to do this), open the scripts folder for the bot (for Streamlabs Chatbot, you can open the Scripts tab, right click and open folder), then open the folder of this script. 
+2- Open EmptyKeys folder, and copy the files into the main folder (where GetCTT.py is). Open keys.txt, and fill in your customer key/secret and access token/secret between the single quotes (see ExampleKeys.txt for how it should look like).
 
   	To get customer key/secret and access token/secret:
   
