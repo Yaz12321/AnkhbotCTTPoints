@@ -34,5 +34,7 @@ NOTE: This script is a bit complicated to set up. If you need help, please conac
 
 
 
+Check out more of my scripts: https://github.com/Yaz12321?tab=repositories
+
 
 
