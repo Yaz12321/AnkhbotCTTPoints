@@ -32,7 +32,7 @@ NOTE: if the "Only when live" is enabled, the python.exe window will open automa
 
 NOTE: This script is a bit complicated to set up. If you need help, please conact me. 
 
-
+Note: With the new Twitch points system, points cannot be added (yet). However, the script can still be used to monitor twitter. To do so, disable the script, but in its setting you can open the "twitter monitor". The command would not work though.
 
 Check out more of my scripts: https://github.com/Yaz12321?tab=repositories
 
